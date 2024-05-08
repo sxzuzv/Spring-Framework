@@ -15,8 +15,17 @@ public class MemberServiceImpl implements MemberService {
     // 모두에 의존하는 상태이다. => 즉, 추상화와 구체화 모두에 의존하고 있다.
     // 이 경우, 추후 코드 상의 변경이 존재할 시 클라이언트의 코드까지 변경해야 하는
     // 문제점을 초래하게 되며, 이에 따라 DIP를 위반하게 된다.
-    private final MemberRepository memberRepository =
-            new MemoryMemberRepositoryImpl();
+
+    // private final MemberRepository memberRepository = new MemoryMemberRepositoryImpl();
+    // DIP 위반을 개선한다.: 클라이언트(MemberServiceImpl)는 회원 저장소(MemberRepository)에만 의존한다.
+
+    // 의존 관계 주입: 클라이언트(MemberServiceImpl) 입장에서 보면 의존 관계를 마치 외부에서 주입해주는 것 같다.
+    private final MemberRepository memberRepository;
+
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        // 생성자를 통해 memberRepository에 어떤 객체가 들어갈 것인지를 결정한다.
+        this.memberRepository = memberRepository;
+    }
 
     // 회원 등록 (회원 저장소의 메서드를 사용하여 회원을 등록한다.)
     @Override
