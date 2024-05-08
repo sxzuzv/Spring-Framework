@@ -3,12 +3,14 @@ package spring.core;
 import spring.core.member.Grade;
 import spring.core.member.Member;
 import spring.core.member.MemberService;
-import spring.core.member.MemberServiceImpl;
 
 public class MemberApp {
     public static void main(String[] args) {
-        // 회원 서비스 객체를 생성한다.
-        MemberService memberService = new MemberServiceImpl();
+        // MemberService memberService = new MemberServiceImpl();
+
+        // 회원 서비스 객체를 생성한다. => AppConfig 클래스 이용
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
 
         // 회원 가입
         // 1) 회원 객체를 생성한다. : ID(1), 이름(memberA), 등급(VIP)
@@ -23,6 +25,6 @@ public class MemberApp {
         // 가입한 회원의 이름을 출력한다.
         System.out.println("new member = " + member.getName());
         // 조회한 회원의 이름을 출력한다.
-        System.out.println("findMember = " + findMember.getName());
+        System.out.println("find Member = " + findMember.getName());
     }
 }

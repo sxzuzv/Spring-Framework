@@ -3,15 +3,18 @@ package spring.core;
 import spring.core.member.Grade;
 import spring.core.member.Member;
 import spring.core.member.MemberService;
-import spring.core.member.MemberServiceImpl;
 import spring.core.order.Order;
 import spring.core.order.OrderService;
-import spring.core.order.OrderServiceImpl;
 
 public class OrderApp {
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
-        OrderService orderService = new OrderServiceImpl();
+        // MemberService memberService = new MemberServiceImpl();
+        // OrderService orderService = new OrderServiceImpl();
+
+        // 회원 서비스, 주문 서비스 객체를 생성한다. => AppConfig 클래스 이용
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
+        OrderService orderService = appConfig.orderService();
 
         Long memberId = 1L;
 
