@@ -1,5 +1,7 @@
 package spring.core;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import spring.core.member.Grade;
 import spring.core.member.Member;
 import spring.core.member.MemberService;
@@ -12,9 +14,18 @@ public class OrderApp {
         // OrderService orderService = new OrderServiceImpl();
 
         // 회원 서비스, 주문 서비스 객체를 생성한다. => AppConfig 클래스 이용
-        AppConfig appConfig = new AppConfig();
-        MemberService memberService = appConfig.memberService();
-        OrderService orderService = appConfig.orderService();
+        // AppConfig appConfig = new AppConfig();
+        // MemberService memberService = appConfig.memberService();
+        // OrderService orderService = appConfig.orderService();
+
+        ApplicationContext applicationContext =
+                new AnnotationConfigApplicationContext(AppConfig.class);
+
+        // 스프링 컨테이너에서 꺼내올 클래스를 선택한다.
+        MemberService memberService =
+                applicationContext.getBean("memberService", MemberService.class);
+        OrderService orderService =
+                applicationContext.getBean("orderService", OrderService.class);
 
         Long memberId = 1L;
 
