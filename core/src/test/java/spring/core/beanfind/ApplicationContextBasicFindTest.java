@@ -32,4 +32,16 @@ class ApplicationContextBasicFindTest {
         // memberService(MemberService = interface)의 구현 객체를 판단한다.
         assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
     }
+
+    @Test
+    @DisplayName("구체 타입으로 조회")
+    void findBeanByType2() {
+        // 구현 객체 자체를 조회한다.
+        // MemberService = interface, MemberServiceImpl = MemberService의 구현체
+        MemberServiceImpl memberService =
+                ac.getBean("memberService", MemberServiceImpl.class);
+
+        // memberService의 구현 객체를 판단한다.
+        assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
+    }
 }
