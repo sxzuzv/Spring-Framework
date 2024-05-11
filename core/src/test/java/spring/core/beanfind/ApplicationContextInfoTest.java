@@ -22,4 +22,23 @@ class ApplicationContextInfoTest {
             System.out.println("name = " + beanDefinitionName + " / object = " + bean);
         }
     }
+
+    @Test
+    @DisplayName("애플리케이션 빈 출력")
+    void findApplicationBean() {
+        // 스프링 기본 빈을 제외한 모든 애플리케이션 빈을 출력한다.
+        String[] beanDefinitionNames = ac.getBeanDefinitionNames();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            // getBeanDefinition(name): 각 빈에 대한 메타 데이터 정보를 가져온다.
+            BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);
+
+            // getRole(): 각 빈의 역할을 판단한다.
+            // ROLE_APPLICATION: 스프링 내부에서 자체적으로 등록한 빈이 아닌, 애플리케이션 개발을 위해 등록한 빈
+            if (beanDefinition.getRole() == BeanDefinition.ROLE_APPLICATION) {
+                // 해당 빈이 애플리케이션 빈인 경우, 출력한다.
+                Object bean = ac.getBean(beanDefinitionName);
+                System.out.println("name = " + beanDefinitionName + " / object = " + bean);
+            }
+        }
+    }
 }
