@@ -22,4 +22,14 @@ class ApplicationContextBasicFindTest {
         // memberService(MemberService = interface)의 구현 객체를 판단한다.
         assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
     }
+
+    @Test
+    @DisplayName("빈 타입으로 조회")
+    void findBeanByType() {
+        // 이름 없이 타입으로만 빈을 조회한다.
+        MemberService memberService = ac.getBean(MemberService.class);
+
+        // memberService(MemberService = interface)의 구현 객체를 판단한다.
+        assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
+    }
 }
