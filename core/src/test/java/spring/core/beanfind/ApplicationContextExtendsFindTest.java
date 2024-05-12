@@ -10,6 +10,7 @@ import spring.core.discount.DiscountPolicy;
 import spring.core.discount.FixDiscountPolicy;
 import spring.core.discount.RateDiscountPolicy;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertThrows;
 
 class ApplicationContextExtendsFindTest {
@@ -27,6 +28,18 @@ class ApplicationContextExtendsFindTest {
         // () -> : 우측에 지정한 로직을 실행했을 시, 지정한 예외가 발생하면 테스트에 성공한다.
         assertThrows(NoUniqueBeanDefinitionException.class,
                 () -> ac.getBean(DiscountPolicy.class));
+    }
+
+    @Test
+    @DisplayName("부모 타입으로 조회 시, 둘 이상의 자식이 존재하면 별도의 빈 이름을 지정한다.")
+    void findBeanByParentTypeBeanName() {
+        // 부모 타입으로 조회 시, 자식 타입 모두가 함께 조회된다.
+        // => 이름 없이 타입으로만 조회 시, 두 개의 자식 타입이 조회되므로 중복 오류가 발생한다.
+        // 이를 해결하기 위해 조회 시, 타입과 함께 별도의 빈 이름을 지정한다.
+        DiscountPolicy rateDiscountPolicy = ac.getBean("rateDiscountPolicy", DiscountPolicy.class);
+
+        // rateDiscountPolicy(DiscountPolicy = interface)의 구현 객체를 판단한다.
+        assertThat(rateDiscountPolicy).isInstanceOf(RateDiscountPolicy.class);
     }
 
     @Configuration
