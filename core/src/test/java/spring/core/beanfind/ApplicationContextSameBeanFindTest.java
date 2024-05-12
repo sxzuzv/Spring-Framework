@@ -27,6 +27,15 @@ class ApplicationContextSameBeanFindTest {
                 () -> ac.getBean(MemberRepository.class));
     }
 
+    @Test
+    @DisplayName("두 개 이상의 동일 타입이 존재하는 경우, 별도의 빈 이름을 지정한다.")
+    void findBeanByName() {
+        MemberRepository memberRepository = ac.getBean("memberRepository1", MemberRepository.class);
+
+        // memberRepository(MemberRepository = interface)의 구현 객체를 판단한다.
+        Assertions.assertThat(memberRepository).isInstanceOf(MemoryMemberRepositoryImpl.class);
+    }
+
     @Configuration
     static class SameBeanConfig {   // 본 테스트 코드에서 사용할 임의의 설정(구성) 클래스
         @Bean
