@@ -69,6 +69,17 @@ class ApplicationContextExtendsFindTest {
         assertThat(beansOfType.size()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("최상위 타입(Object)으로 하위(자식) 타입까지 모두 조회")
+    void findAllBeanByObject() {
+        // Object(최상위 타입) 하위(자식) 타입의 빈을 모두 가져온다.
+        Map<String, Object> beansOfType = ac.getBeansOfType(Object.class);
+
+        for (String key : beansOfType.keySet()) {
+            System.out.println("key = " + key + " / value = " + beansOfType.get(key));
+        }
+    }
+
     @Configuration
     static class TestConfig {   // 본 테스트 코드에서 사용할 임의의 설정(구성) 클래스
         @Bean
