@@ -1,5 +1,6 @@
 package spring.core.beanfind;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
@@ -40,6 +41,16 @@ class ApplicationContextExtendsFindTest {
 
         // rateDiscountPolicy(DiscountPolicy = interface)의 구현 객체를 판단한다.
         assertThat(rateDiscountPolicy).isInstanceOf(RateDiscountPolicy.class);
+    }
+
+    @Test
+    @DisplayName("특정 하위 타입으로 조회")
+    void findBeanBySubType() {
+        // 이름 지정 없이, 특정 하위(자식) 타입으로 빈을 찾는다.
+        RateDiscountPolicy bean = ac.getBean(RateDiscountPolicy.class);
+
+        // bean(변수명)이 RateDiscountPolicy의 객체인지 판단한다.
+        Assertions.assertThat(bean).isInstanceOf(RateDiscountPolicy.class);
     }
 
     @Configuration
