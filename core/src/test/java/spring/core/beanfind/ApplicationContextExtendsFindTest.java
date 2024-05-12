@@ -11,6 +11,8 @@ import spring.core.discount.DiscountPolicy;
 import spring.core.discount.FixDiscountPolicy;
 import spring.core.discount.RateDiscountPolicy;
 
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertThrows;
 
@@ -51,6 +53,20 @@ class ApplicationContextExtendsFindTest {
 
         // bean(변수명)이 RateDiscountPolicy의 객체인지 판단한다.
         Assertions.assertThat(bean).isInstanceOf(RateDiscountPolicy.class);
+    }
+
+    @Test
+    @DisplayName("부모 타입으로 하위(자식) 타입까지 모두 조회")
+    void findAllBeanByParentType() {
+        // DiscountPolicy(부모 타입) 하위(자식) 타입의 빈을 모두 가져온다.
+        Map<String, DiscountPolicy> beansOfType = ac.getBeansOfType(DiscountPolicy.class);
+
+        for (String key : beansOfType.keySet()) {
+            System.out.println("key = " + key + " / value = " + beansOfType.get(key));
+        }
+        System.out.println("beansOfType = " + beansOfType);
+
+        assertThat(beansOfType.size()).isEqualTo(2);
     }
 
     @Configuration
