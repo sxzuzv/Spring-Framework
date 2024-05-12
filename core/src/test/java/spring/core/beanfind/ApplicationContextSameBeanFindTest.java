@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import spring.core.member.MemberRepository;
 import spring.core.member.MemoryMemberRepositoryImpl;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ApplicationContextSameBeanFindTest {
@@ -34,6 +36,22 @@ class ApplicationContextSameBeanFindTest {
 
         // memberRepository(MemberRepository = interface)의 구현 객체를 판단한다.
         Assertions.assertThat(memberRepository).isInstanceOf(MemoryMemberRepositoryImpl.class);
+    }
+
+    @Test
+    @DisplayName("특정 타입 빈 모두 조회")
+    void findAllBeanByType() {
+        // 지정한 타입에 해당하는 모든 빈을 조회한다. => Map 형태로 반환
+        Map<String, MemberRepository> beansOfType = ac.getBeansOfType(MemberRepository.class);
+
+        // Map에서 key, value를 출력해 빈을 확인한다.
+        for (String key : beansOfType.keySet()) {
+            System.out.println("key  = " + key + " / value = " + beansOfType.get(key));
+        }
+        System.out.println("beansOfType = " + beansOfType);
+
+        // 조회한 빈의 수가 2개여야 한다.
+        Assertions.assertThat(beansOfType.size()).isEqualTo(2);
     }
 
     @Configuration
