@@ -1,5 +1,8 @@
 package spring.core.order;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import spring.core.discount.DiscountPolicy;
 import spring.core.member.Member;
 import spring.core.member.MemberRepository;
@@ -9,6 +12,7 @@ import spring.core.member.MemberRepository;
  * 주문 서비스(역할)에 대한 구현체 : OrderServiceImpl
  */
 
+@Component
 public class OrderServiceImpl implements OrderService {
     // 주문 서비스는 회원 저장소, 할인 정책에 접근하여 회원 및 할인 정책에 대한 정보를 얻어야 한다.
     // 주문 서비스는 할인 정책과 관련한 부분은 DiscountPolicy에게 권한을 위임하고 있다. (할인 금액 파악 업무를 맡기고, 금액만 받는다.)
@@ -24,6 +28,7 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
+    @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         // 생성자를 통해 memberRepository, discountPolicy에 어떤 객체가 들어갈 것인지를 결정한다.
         this.memberRepository = memberRepository;
