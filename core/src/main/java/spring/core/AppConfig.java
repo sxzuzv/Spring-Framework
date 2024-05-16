@@ -35,7 +35,7 @@ public class AppConfig {
     }
 
     @Bean
-    public static MemoryMemberRepositoryImpl memberRepositoryImpl() {
+    public MemoryMemberRepositoryImpl memberRepositoryImpl() {
         return new MemoryMemberRepositoryImpl();
     }
 
