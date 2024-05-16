@@ -33,4 +33,15 @@ public class ConfigurationSingletonTest {
         Assertions.assertThat(memberService.getMemberRepository()).isSameAs(memberRepositoryImpl);
         Assertions.assertThat(orderService.getMemberRepository()).isSameAs(memberRepositoryImpl);
     }
+
+    @Test
+    void configurationDeep() {
+        // 스프링 컨테이너(싱글톤 컨테이너) 선언
+        // AppConfig 클래스 자체도 스프링 빈으로 함께 등록된다.
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        AppConfig bean = ac.getBean(AppConfig.class);
+
+        // getClass(): 클래스 타입이 무엇인지 알려준다.
+        System.out.println("bean = " + bean.getClass());
+    }
 }
