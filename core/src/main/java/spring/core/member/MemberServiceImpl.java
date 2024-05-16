@@ -1,10 +1,15 @@
 package spring.core.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 /**
  * 회원 서비스(역할)을 구현하는 클래스를 작성한다.
  * 회원 서비스(역할)에 대한 구현체 : MemberServiceImpl
  */
 
+@Component
 public class MemberServiceImpl implements MemberService {
     // 회원 서비스(MemberServiceImpl)는 회원 저장소(MemberRepository)에 의존한다.
     // 이때, 회원 저장소는 '메모리 회원 저장소'를 사용한다.
@@ -22,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
     // 의존 관계 주입: 클라이언트(MemberServiceImpl) 입장에서 보면 의존 관계를 마치 외부에서 주입해주는 것 같다.
     private final MemberRepository memberRepository;
 
+    @Autowired  // @Autowired: 의존 관계를 자동으로 주입해주도록 생성자에 애너테이션을 부착한다.
     public MemberServiceImpl(MemberRepository memberRepository) {
         // 생성자를 통해 memberRepository에 어떤 객체가 들어갈 것인지를 결정한다.
         this.memberRepository = memberRepository;
