@@ -39,4 +39,9 @@ public class OrderServiceImpl implements OrderService {
         // (주문 서비스는 최종 주문 결과를 반환하면 된다.)
         return new Order(memberId, itemName, itemPrice, discountPrice);
     }
+
+    // 테스트를 위한 객체 인스턴스 조회 메서드
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
+    }
 }
