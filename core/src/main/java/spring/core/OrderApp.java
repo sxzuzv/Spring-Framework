@@ -36,7 +36,7 @@ public class OrderApp {
         memberService.join(member);
 
         // 주문 생성
-        Order order = orderService.createorder(memberId, "itemA", 10000);
+        Order order = orderService.createOrder(memberId, "itemA", 10000);
 
         // 최종 주문 결과를 출력한다.
         // order.toString()과 결과는 동일하다.

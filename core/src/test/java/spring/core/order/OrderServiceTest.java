@@ -33,7 +33,7 @@ public class OrderServiceTest {
         memberService.join(member);
 
         // 주문 생성
-        Order order = orderService.createorder(memberId, "itemA", 10000);
+        Order order = orderService.createOrder(memberId, "itemA", 10000);
 
         // 최종 주문 결과에서의 할인 금액과 정액 할인 적용 금액이 동일한지 검증한다.
         Assertions.assertEquals(order.getDiscountPrice(), 1000);
