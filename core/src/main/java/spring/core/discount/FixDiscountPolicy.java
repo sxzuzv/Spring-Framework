@@ -1,5 +1,6 @@
 package spring.core.discount;
 
+import org.springframework.stereotype.Component;
 import spring.core.member.Grade;
 import spring.core.member.Member;
 
@@ -7,7 +8,7 @@ import spring.core.member.Member;
  * 할인 정책(역할)을 구현하는 클래스를 작성한다.
  * 할인 정책(역할)에 대한 구현체 : FixDiscountPolicy
  */
-
+@Component
 public class FixDiscountPolicy implements DiscountPolicy {
     // 회원 등급이 VIP일 경우, 할인 금액을 1000원으로 적용한다. (정액 할인 정책)
     private int discountFixAmount = 1000;
