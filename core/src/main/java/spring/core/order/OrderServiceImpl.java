@@ -21,16 +21,12 @@ public class OrderServiceImpl implements OrderService {
     // 새로운 할인 정책을 적용한다.: FixDiscountPolicy -> RateDiscountPolicy
     // private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
-    // 현재 클라이언트(OrderServiceImpl)는 DiscountPolicy 인터페이스 뿐만 아니라
+    // 현재 클라이언트(OrderServiceImpl)는 * dlDiscountPolicy 인터페이스 뿐만 아니라
     // 구체 클래스인 FixDiscountPolicy, RateDiscountPolicy도 함께 의존하고 있다. (DIP, OCP 위반)
 
     // 클라이언트(OrderServiceImpl)가 MemberRepository, DisountPolicy 인터페이스에만 의존하도록 코드를 변경한다.
-    // private final MemberRepository memberRepository;
-    // private final DiscountPolicy discountPolicy;
-
-    private MemberRepository memberRepository;
-    private DiscountPolicy discountPolicy;
-
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
 
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
