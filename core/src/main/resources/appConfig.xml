@@ -12,6 +12,6 @@
 
     <bean id="orderService" class="spring.core.order.OrderServiceImpl">
         <constructor-arg name="memberRepository" ref="memberRepositoryImpl" />
-        <constructor-arg name="discountPolicy" ref="discountPolicy" />
+        <constructor-arg name="rateDiscountPolicy" ref="discountPolicy" />
     </bean>
 </beans>

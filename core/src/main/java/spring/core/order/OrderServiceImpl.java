@@ -14,7 +14,7 @@ import spring.core.member.MemberRepository;
  */
 
 @Component
-@RequiredArgsConstructor    // final 키워드가 붙은 필드(필수 필드)를 매개변수로 가지는 생성자를 자동으로 만든다.
+// @RequiredArgsConstructor: final 키워드가 붙은 필드(필수 필드)를 매개변수로 가지는 생성자를 자동으로 만든다.
 public class OrderServiceImpl implements OrderService {
     // 주문 서비스는 회원 저장소, 할인 정책에 접근하여 회원 및 할인 정책에 대한 정보를 얻어야 한다.
     // 주문 서비스는 할인 정책과 관련한 부분은 DiscountPolicy에게 권한을 위임하고 있다. (할인 금액 파악 업무를 맡기고, 금액만 받는다.)
@@ -30,12 +30,12 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-    // @Autowired => 생성자가 하나일 경우, 생략 가능하다.
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        // 생성자를 통해 memberRepository, discountPolicy에 어떤 객체가 들어갈 것인지를 결정한다.
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    @Autowired // 생성자가 하나일 경우, 생략 가능하다.
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy rateDiscountPolicy) {
+        // 생성자를 통해 memberRepository, discountPolicy에 어떤 객체가 들어갈 것인지를 결정한다.
+        this.memberRepository = memberRepository;
+        this.discountPolicy = rateDiscountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
