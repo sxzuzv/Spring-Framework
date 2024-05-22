@@ -2,6 +2,7 @@ package spring.core.discount;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import spring.core.annotation.MainDiscountPolicy;
 import spring.core.member.Grade;
 import spring.core.member.Member;
 
@@ -11,6 +12,7 @@ import spring.core.member.Member;
  */
 @Component
 //@Qualifier("fixDiscountPolicy")
+@MainDiscountPolicy // 사용자 정의 애너테이션 적용
 public class FixDiscountPolicy implements DiscountPolicy {
     // 회원 등급이 VIP일 경우, 할인 금액을 1000원으로 적용한다. (정액 할인 정책)
     private int discountFixAmount = 1000;

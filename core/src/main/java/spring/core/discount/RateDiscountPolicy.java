@@ -8,7 +8,7 @@ import spring.core.member.Member;
 
 @Component
 //@Qualifier("mainDiscountPolicy")
-@Primary    // @Autowired 시, @Primary 애너테이션이 붙은 빈을 가장 높은 우선순위로 설정한다.
+//@Primary: @Autowired 시, @Primary 애너테이션이 붙은 빈을 가장 높은 우선순위로 설정한다.
 public class RateDiscountPolicy implements DiscountPolicy {
     // 주문한 금액 대비 %를 할인해주는 새로운 정률 할인 정책을 추가한다.
     private int discountPercent = 10;   // 할인율 10% 고정

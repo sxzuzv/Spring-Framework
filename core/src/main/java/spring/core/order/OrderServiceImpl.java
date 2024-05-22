@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import spring.core.annotation.MainDiscountPolicy;
 import spring.core.discount.DiscountPolicy;
 import spring.core.member.Member;
 import spring.core.member.MemberRepository;
@@ -31,7 +32,8 @@ public class OrderServiceImpl implements OrderService {
     private final DiscountPolicy discountPolicy;
 
     @Autowired // 생성자가 하나일 경우, 생략 가능하다.
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        // @Qualifier 대신 사용자 정의 애너테이션 적용
         // 생성자를 통해 memberRepository, discountPolicy에 어떤 객체가 들어갈 것인지를 결정한다.
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
