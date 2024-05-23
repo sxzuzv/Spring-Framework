@@ -1,9 +1,6 @@
 package spring.core.lifecycle;
 
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
-
-public class NetworkClient implements InitializingBean, DisposableBean {    // 테스트를 위한 클라이언트 객체
+public class NetworkClient {    // 테스트를 위한 클라이언트 객체
     private String url;
 
     public NetworkClient() {
@@ -29,18 +26,16 @@ public class NetworkClient implements InitializingBean, DisposableBean {    // �
         System.out.println("CLOSE: " + url);
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    public void init() {
         // 프로퍼티 세팅이 끝나면(=의존 관계 주입이 끝나면) 호출된다.
-        System.out.println("NetworkClient.afterPropertiesSet");
+        System.out.println("NetworkClient.init");
         connect();
         call("초기화 연결 메시지");
     }
 
-    @Override
-    public void destroy() throws Exception {
+    public void close() {
         // 스프링 빈 소멸 직전에 호출된다.
-        System.out.println("NetworkClient.destroy");
+        System.out.println("NetworkClient.close");
         disconnect();
     }
 }

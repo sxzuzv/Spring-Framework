@@ -21,7 +21,7 @@ public class BeanLifeCycleTest {
 
     @Configuration  // 설정 정보 클래스에 부착
     static class LifeCycleConfig {
-        @Bean
+        @Bean(initMethod = "init", destroyMethod = "close") // 빈 등록 초기화, 소멸 메서드를 지정한다.
         public NetworkClient networkClient() {
             NetworkClient networkClient = new NetworkClient();  // 스프링 빈 등록 과정에서 객체 생성, 생성자가 호출된다.
             networkClient.setUrl("http://hello-spring.dev");    // 임의의 URL 지정
