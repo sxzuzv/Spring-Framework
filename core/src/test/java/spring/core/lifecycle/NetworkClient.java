@@ -1,5 +1,8 @@
 package spring.core.lifecycle;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 public class NetworkClient {    // 테스트를 위한 클라이언트 객체
     private String url;
 
@@ -26,6 +29,7 @@ public class NetworkClient {    // 테스트를 위한 클라이언트 객체
         System.out.println("CLOSE: " + url);
     }
 
+    @PostConstruct
     public void init() {
         // 프로퍼티 세팅이 끝나면(=의존 관계 주입이 끝나면) 호출된다.
         System.out.println("NetworkClient.init");
@@ -33,6 +37,7 @@ public class NetworkClient {    // 테스트를 위한 클라이언트 객체
         call("초기화 연결 메시지");
     }
 
+    @PreDestroy
     public void close() {
         // 스프링 빈 소멸 직전에 호출된다.
         System.out.println("NetworkClient.close");
