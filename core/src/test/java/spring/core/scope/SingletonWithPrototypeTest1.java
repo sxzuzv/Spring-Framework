@@ -2,9 +2,8 @@ package spring.core.scope;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.inject.Provider;
 import org.junit.Test;
-import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
 
@@ -40,7 +39,7 @@ public class SingletonWithPrototypeTest1 {
 
         // 싱글톤 스코프 빈은 스프링 컨테이너 생성 시점에 만들어진다.
         // 싱글톤 빈은 프로토타입 빈의 참조값을 내부 필드에 보관한다.
-        // ObjectProvider를 통해 프로토타입 빈을 사용할 때마다 새롭게 생성했다.
+        // JSR-330 Provider를 통해 프로토타입 빈을 조회했다. 프로토타입 빈은 조회 시점마다 새로 생성됐다.
         // 즉, 싱글톤 빈이 참조하고 있는 프로토타입 빈은 서로 다른 인스턴스이므로 count 필드는 모두 0 -> 1이 된다.
         ClientBean clientBean1 = ac.getBean(ClientBean.class);  // 첫 번째 싱글톤 빈 찾기
         int count1 = clientBean1.logic();
@@ -76,14 +75,17 @@ public class SingletonWithPrototypeTest1 {
 
     @Scope("singleton")
     static class ClientBean {
-        // 스프링 컨테이너에서 지정한 프로토타입 빈을 찾아줄 ObjectProvider 의존 관계 주입
-        @Autowired
-        private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+        // 스프링 컨테이너에서 지정한 프로토타입 빈을 찾아줄 JSR-330 Provider 의존 관계 주입
+        private Provider<PrototypeBean> prototypeBeanProvider;
+
+        ClientBean(Provider<PrototypeBean> prototypeBeanProvider) {
+            this.prototypeBeanProvider = prototypeBeanProvider;
+        }
 
         public int logic() {
-            // logic()이 호출되면 prototypeBeanProvider를 통해 프로토타입 빈을 찾아온다.
-            // 스프링 컨테이너에 요청하여 프로토타입 빈을 새로 생성한다.
-            PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+            // 스프링 컨테이너에 요청하여 프로토타입 빈을 조회한다. 요청 시점에 프로토타입 빈은 새로 생성된다.
+            // ObjectProvider 사용 시 .getObject() / JSR-330 Provider 사용 시 .get();
+            PrototypeBean prototypeBean = prototypeBeanProvider.get();
             prototypeBean.addCount();           // 프로토타입 빈의 addCount() 호출 (count 필드 값 증가)
             return prototypeBean.getCount();    // 증가된 count 필드 값 반환
         }
